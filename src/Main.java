@@ -10,22 +10,17 @@ public class Main {
 		int difficulty = scanner.nextInt ();
 		Random random = new Random();
 	
-		int max_guessing_number = 10;
-		int random_int = 0;
-		switch (difficulty){
-			case 1:
-				max_guessing_number =  10;
-				break;
-			case 2:
-				max_guessing_number = 50;
-				break;
-			case 3:
-				max_guessing_number = 100;
-				break;
-			default:
-				System.out.println("Wrong choice, defaulting to Easy mode.");
-				max_guessing_number = 10;
-		}
+		int max_guessing_number;
+		int random_int;
+		max_guessing_number = switch (difficulty) {
+			case 1 -> 10;
+			case 2 -> 50;
+			case 3 -> 100;
+			default -> {
+				System.out.println ("Wrong choice, defaulting to Easy mode.");
+				yield 10;
+			}
+		};
 		
 		// Generate a random number in the range [0,max_guessing_number]
 		random_int = random.nextInt(max_guessing_number+1);
@@ -36,11 +31,10 @@ public class Main {
 		while(guess != random_int){
 			if (guess > random_int){
 				System.out.println("Too high! Try again.");
-				guess = scanner.nextInt();
-			} else if (guess < random_int){
+			} else {
 				System.out.println("Too low! try again.");
-				guess = scanner.nextInt();
 			}
+			guess = scanner.nextInt();
 		}
 		System.out.println ("Correct! You guessed the number!");
 		scanner.close();
